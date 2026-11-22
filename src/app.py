@@ -83,6 +83,11 @@ def resume_approval(thread_id: str, approved: bool) -> None:
     graph.invoke(Command(resume={"approved": approved}), graph_config(thread_id))
 
 
+def start_new_session() -> None:
+    """Create a new thread before Streamlit recreates the ID input widget."""
+    st.session_state.thread_id = f"session-{uuid.uuid4().hex[:8]}"
+
+
 def main() -> None:
     """Render the Streamlit control room from its explicit entrypoint."""
     global graph
@@ -100,9 +105,11 @@ def main() -> None:
         thread_id = st.text_input("Session thread ID", key="thread_id")
         st.caption("Use a different ID for a separate conversation and checkpoint history.")
 
-        if st.button("Start a new session", use_container_width=True):
-            st.session_state.thread_id = f"session-{uuid.uuid4().hex[:8]}"
-            st.rerun()
+        st.button(
+            "Start a new session",
+            use_container_width=True,
+            on_click=start_new_session,
+        )
 
         st.divider()
         st.header("Circuit-breaker demo")
