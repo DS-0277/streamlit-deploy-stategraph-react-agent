@@ -74,48 +74,8 @@ uv run pytest -v
 
 ## Live Streamlit Demo Inputs
 
-Deployment URL: <https://app-deploy-stategraph-react-agent-a4nkmarjeggyohdaxkn87k.streamlit.app/>
-
-Use the following prompts in order during a presentation. Keep the same
-**Session thread ID** for the first three prompts so the memory result is visible.
-
-1. **Safe tool call**
-
-   ```text
-   Check service metrics for auth-service.
-   ```
-
-   Expected: the safe metrics tool runs automatically. No human approval is needed.
-
-2. **Short-term memory**
-
-   ```text
-   What service did I just ask you to check?
-   ```
-
-   Expected: the agent recalls `auth-service`. The messages-in-memory count increases.
-
-3. **Sensitive action / HITL approval**
-
-   ```text
-   Scale the Kubernetes cluster for auth-service to 5 replicas.
-   ```
-
-   Expected: the graph pauses and shows **Approve action** and **Reject action**.
-   Click **Approve action** to demonstrate the approved tool execution.
-
-4. **Optional rejection demonstration**
-
-   First click **Start a new session**, then enter:
-
-   ```text
-   Transfer 500 USD to recipient ACME-001.
-   ```
-
-   Expected: the graph pauses for approval. Click **Reject action** to show that
-   the sensitive action does not run and that the rejection is recorded.
-
-5. **Circuit-breaker display**
-
-   In the left sidebar, turn on **Show duplicate-call detection**. This displays
-   how repeated identical tool calls are detected and stopped safely.
+1. `Check service metrics for auth-service.` — safe tool runs automatically.
+2. `What service did I just ask you to check?` — shows short-term memory.
+3. `Scale the Kubernetes cluster for auth-service to 5 replicas.` — pauses for human approval; click **Approve action**.
+4. Start a new session, then enter `Transfer 500 USD to recipient ACME-001.` — pauses for approval; click **Reject action**.
+5. Turn on **Show duplicate-call detection** in the sidebar — displays the circuit breaker.
